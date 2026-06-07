@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mockup — Notificación Agente Tuali</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+
+    .phone {
+      width: 375px;
+      height: 812px;
+      background: #000;
+      border-radius: 54px;
+      position: relative;
+      box-shadow:
+        0 0 0 2px #3a3a3a,
+        0 0 0 6px #1a1a1a,
+        0 40px 80px rgba(0,0,0,.8);
+      overflow: hidden;
+    }
+
+    /* Wallpaper */
+    .wallpaper {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    }
+
+    .wallpaper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(224,40,26,.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(99,102,241,.2) 0%, transparent 55%);
+    }
+
+    /* Notch */
+    .notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 126px; height: 34px;
+      background: #000;
+      border-radius: 0 0 20px 20px;
+      z-index: 10;
+    }
+
+    /* Status bar */
+    .status-bar {
+      position: absolute;
+      top: 14px; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 5;
+    }
+    .status-time {
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -.3px;
+    }
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-icons svg { color: white; }
+
+    /* Lock screen content */
+    .lock-content {
+      position: absolute;
+      top: 60px; left: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lock-date {
+      color: rgba(255,255,255,.7);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .lock-time {
+      color: white;
+      font-size: 76px;
+      font-weight: 200;
+      letter-spacing: -4px;
+      line-height: 1;
+    }
+
+    /* Notificaciones */
+    .notifications {
+      position: absolute;
+      top: 210px;
+      left: 16px; right: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .notif {
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 20px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,.22);
+    }
+
+    .notif-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .notif-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .notif-app {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      flex: 1;
+    }
+    .notif-time {
+      font-size: 12px;
+      color: rgba(255,255,255,.5);
+    }
+
+    .notif-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .notif-body {
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+      line-height: 1.45;
+    }
+
+    .notif-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .notif-btn {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+    }
+    .notif-btn.primary {
+      background: #E0281A;
+      color: white;
+    }
+    .notif-btn.secondary {
+      background: rgba(255,255,255,.2);
+      color: white;
+    }
+
+    /* Highlight chip */
+    .chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .chip-green  { background: rgba(34,197,94,.25);  color: #86efac; }
+    .chip-yellow { background: rgba(251,191,36,.2);  color: #fde68a; }
+    .chip-red    { background: rgba(224,40,26,.25);  color: #fca5a5; }
+
+    /* Metric row */
+    .metric-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .metric {
+      flex: 1;
+      background: rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 7px 10px;
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+    }
+    .metric-lbl {
+      font-size: 10px;
+      color: rgba(255,255,255,.55);
+      margin-top: 1px;
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: absolute;
+      bottom: 24px;
+      left: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .home-indicator {
+      width: 134px; height: 5px;
+      background: rgba(255,255,255,.35);
+      border-radius: 99px;
+    }
+    .unlock-hint {
+      font-size: 13px;
+      color: rgba(255,255,255,.45);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="wallpaper"></div>
+    <div class="notch"></div>
+
+    <!-- Status bar -->
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="status-icons">
+        <!-- Signal -->
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="white">
+          <rect x="0"  y="7" width="3" height="5" rx="1"/>
+          <rect x="4"  y="5" width="3" height="7" rx="1"/>
+          <rect x="8"  y="3" width="3" height="9" rx="1"/>
+          <rect x="12" y="0" width="3" height="12" rx="1"/>
+        </svg>
+        <!-- Wifi -->
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+          <path d="M8 10.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="white"/>
+          <path d="M4.5 7.5a5 5 0 0 1 7 0" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M1.5 4.5a9 9 0 0 1 13 0" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".5"/>
+        </svg>
+        <!-- Battery -->
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+          <rect x="0" y="1" width="21" height="10" rx="3" stroke="white" stroke-width="1.2"/>
+          <rect x="1.5" y="2.5" width="15" height="7" rx="2" fill="white"/>
+          <path d="M22.5 4v4a2 2 0 0 0 0-4z" fill="white" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Lock time -->
+    <div class="lock-content">
+      <p class="lock-date">Sábado, 7 de junio</p>
+      <p class="lock-time">9:41</p>
+    </div>
+
+    <!-- Notificaciones -->
+    <div class="notifications">
+
+      <!-- Notificación 1: Benchmark de zona -->
+      <div class="notif">
+        <div class="notif-header">
+          <div class="notif-icon" style="background: linear-gradient(135deg,#E0281A,#ff6b35);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 8v4l3 3"/>
+            </svg>
+          </div>
+          <span class="notif-app">Tuali · Agente IA</span>
+          <span class="notif-time">hace 3 min</span>
+        </div>
+
+        <span class="chip chip-green">📍 Benchmark de zona detectado</span>
+
+        <p class="notif-title">Oportunidad: tus vecinos están agotando Coca-Cola</p>
+        <p class="notif-body">
+          3 tiendas en un radio de 500 m reportan quiebre de stock en Coca-Cola 500ml.
+          Es el momento ideal para destacar — tienes <strong style="color:#fff">24 unidades disponibles</strong>.
+        </p>
+
+        <div class="metric-row">
+          <div class="metric">
+            <div class="metric-val" style="color:#86efac">+34%</div>
+            <div class="metric-lbl">Demanda estimada</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">24 uds</div>
+            <div class="metric-lbl">Tu stock actual</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val" style="color:#fde68a">$288</div>
+            <div class="metric-lbl">Ingreso potencial</div>
+          </div>
+        </div>
+
+        <div class="notif-actions">
+          <button class="notif-btn primary">Ver en app →</button>
+          <button class="notif-btn secondary">Descartar</button>
+        </div>
+      </div>
+
+      <!-- Notificación 2: Recordatorio de meta -->
+      <div class="notif">
+        <div class="notif-header">
+          <div class="notif-icon" style="background: linear-gradient(135deg,#7c3aed,#a855f7);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <path d="M22 4 12 14.01l-3-3"/>
+            </svg>
+          </div>
+          <span class="notif-app">Tuali · Metas</span>
+          <span class="notif-time">hace 8 min</span>
+        </div>
+
+        <span class="chip chip-yellow">⭐ Meta semanal</span>
+
+        <p class="notif-title">Vas al 56% — faltan $1,320 para tu meta</p>
+        <p class="notif-body">
+          Con la oportunidad de zona de hoy podrías cerrar el 80% de tu meta de ventas antes del domingo.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="bottom-bar">
+      <p class="unlock-hint">Desliza para abrir</p>
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</body>
+</html>

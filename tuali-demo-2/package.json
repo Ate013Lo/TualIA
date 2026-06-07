@@ -1,0 +1,15 @@
+{
+  "name": "tuali-growth-agent",
+  "version": "1.0.0",
+  "description": "Tuali Growth Agent — Hackathon Demo",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && node server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
